@@ -156,6 +156,7 @@ function setFileDir(path,cbok,cbfail) {
 }
 
 borrarTodo_dir= function (dirPath,quiereSinPedirConfirmacion,cb) {
+ alert('Entra a borrarTodo_dir 1');
  var gotDir= function (dirEntry) { try { ///XXX: separar de UI
   var uc= quiereSinPedirConfirmacion ? "s" : prompt("esta seguro que desea eliminar '"+dirEntry.name+"'?");
   if (uc=="s") {
