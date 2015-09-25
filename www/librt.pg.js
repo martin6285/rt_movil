@@ -96,12 +96,17 @@ function getFileMeta(path,cbok,cbfail) {
 }
 
 function keysFile(dirPath,cb) {
+ alert("keysFile - dirPath = " + dirPath );
  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fsSuccess, onFail);
 
  function fsSuccess(fs) {
   logm("DBG",9,"keysFile gotfs",[dirPath,fs.root]); try {
+ 	alert("fsSuccess - 1 fs.root.fullPath = " + fs.root.fullPath );
    if (dirPath) { fs.root.fullPath= dirPath; } //A: cd //XXX: NO usar O restaurar, PERSISTE PARA OTRAS LLAMADAS!!!
+   
+ 	alert("fsSuccess - 2 fs.root.fullPath = " + fs.root.fullPath );
    var directoryReader = fs.root.createReader()
+   alert("fsSuccess - directoryReader = " + directoryReader );
    directoryReader.readEntries(cb,cb);
   } catch (ex) { logm("ERR",7,"keysFile gotfs",[dirPath,ex.message]); }
  }
@@ -156,7 +161,6 @@ function setFileDir(path,cbok,cbfail) {
 }
 
 borrarTodo_dir= function (dirPath,quiereSinPedirConfirmacion,cb) {
- alert('Entra a borrarTodo_dir 1');
  var gotDir= function (dirEntry) { try { ///XXX: separar de UI
   var uc= quiereSinPedirConfirmacion ? "s" : prompt("esta seguro que desea eliminar '"+dirEntry.name+"'?");
   if (uc=="s") {
@@ -224,7 +228,7 @@ function getHttp(url,reqdata,cbok,cbfail) {
                }
 
                  if(!logIn){
-                  LibAppStarted=false;
+                  //LibAppStarted=false;
                   rtInit();
                  }
 
@@ -336,10 +340,10 @@ function rtInit() {
  var bgo=$('<button>Iniciar</buton>');
  var bgx=$('<button>Salir</buton>');
  var bgc=$('<a href="#">(borrar datos locales)</a>');
- form.append(iusr).append("<br>");
- form.append(ipass).append("<br>");
- form.append(iversion).append("<br>");
- form.append(bgo).append("<br>");
+ form.append(iusr).append("<br><br>");
+ form.append(ipass).append("<br><br>");
+ form.append(iversion).append("<br><br><br>");
+ form.append(bgo).append("<br><br>");
  form.append(bgx).append("<br><br><br>");
  form.append(bgc);
 

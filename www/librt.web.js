@@ -264,7 +264,6 @@ funcionConCache_a_archivos= function (nombre,funcion,cbIdx,funcionClavePara,cach
         setFileBin= function (p,v,cbok,cbf) { localStorage[p]= v; setTimeout(cbok,100); }
         setFileDir= function (p,cbok,cbf) { setTimeout(cbok,100); }
         borrarTodo_dir= function (p,quiereSinPedirConfirmacion,cb) {
-            alert('Entra a borrarTodo_dir 2');
             for (var i=0; i<localStorage.length; i++) { var k= localStorage.key(i);
                 if (k.substr(0,p.length)==p) { localStorage.removeItem(k); }
             }
