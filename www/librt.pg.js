@@ -102,12 +102,14 @@ function keysFile(dirPath,cb) {
  function fsSuccess(fs) {
   logm("DBG",9,"keysFile gotfs",[dirPath,fs.root]); try {
  	alert("fsSuccess - 1 fs.root.fullPath = " + fs.root.fullPath );
+   var bkp = fs.root.fullPath;
    if (dirPath) { fs.root.fullPath= dirPath; } //A: cd //XXX: NO usar O restaurar, PERSISTE PARA OTRAS LLAMADAS!!!
    
  	alert("fsSuccess - 2 fs.root.fullPath = " + fs.root.fullPath );
    var directoryReader = fs.root.createReader()
    alert("fsSuccess - directoryReader = " + directoryReader );
    directoryReader.readEntries(cb,cb);
+   fs.root.fullPath = bkp;
   } catch (ex) { logm("ERR",7,"keysFile gotfs",[dirPath,ex.message]); }
  }
 }
