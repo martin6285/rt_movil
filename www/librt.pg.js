@@ -96,7 +96,6 @@ function getFileMeta(path,cbok,cbfail) {
 }
 
 function keysFile(dirPath,cb) {
- alert("keysFile - dirPath = " + dirPath );
  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fsSuccess, onFail);
 
  function fsSuccess(fs) {
@@ -295,20 +294,53 @@ function evalUpdated(name,cbok,cbfail) {
 
 //S: Borrar archivos
 function removeFile(path, cbok, cbfail){
-	cbfail=cbfail ||onFail;
-	alert("removeFile entra con path=" + path);
-	
-	function gotRemoveFileEntry(fileEntry){
-	    alert("gotRemoveFileEntry - fileEntry=" + fileEntry);
-	    fileEntry.remove(cbok, cbfail);
-	}
-	
-	function fail(error) {
-	    alert('Error borrando archivo: ' + error.code);
-	}
+    console.log("remove file");
+    var relativeFilePath = path;
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+        fileSystem.root.getFile(relativeFilePath, {create:false}, function(fileEntry){
+            fileEntry.remove(function(file){
+                console.log("File removed!");
+            },function(){
+                console.log("error deleting the file " + error.code);
+                });
+            },function(){
+                console.log("file does not exist");
+            });
+        },function(evt){
+            console.log(evt.target.error.code);
+    });
+}
 
-	fileSystem.root.getFile(path, {create: false, exclusive: false}, gotRemoveFileEntry, cbfail);
+//S: Lee archivo local almacenada en particular sin la funcionalidad de caché
+	readLocalFile = function(p, params, cbok, cbf) {
+        var v = localStorage[p];
+        setTimeout(function() {
+            v ? cbok(v) : cbf(params);
+        }, 100);
+    };
+//S: files
+function readLocalFile(path,params,cbok,cbfail) {
+    cbfail=cbfail ||onFail;
+    function read(file) {
+         var reader = new FileReader();
+         reader.onloadend = function(evt) {
+                logm("DBG",8,"getFile onloadend",{path: path, result: evt.target.result});
+                cbok(evt.target.result);
+         };
+         //Se asume que es un archivo txt
+         reader.readAsText(file); 
+    };
 
+    var onGotFile= function (file) { read(file); }
+
+    var onGotFileEntry= function (fileEntry) { fileEntry.file(onGotFile,cbfail(params)); }
+
+    var onGotFs= function (fileSystem) {
+     fileSystem.root.getFile(path, {create: false}, onGotFileEntry, cbfail(params));
+    }
+
+    logm("DBG",8,"getFile",{path: path});
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onGotFs, cbfail(params));
 }
 
 //S: init
