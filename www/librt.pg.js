@@ -313,13 +313,13 @@ function removeFile(path, cbok, cbfail){
 
 //S: Lee archivo local almacenada en particular sin la funcionalidad de caché
 function readLocalFile(path,params,cbok,cbfail) {
-    alert("readLocalFile - path= " + path);
+    //alert("readLocalFile - path= " + path);
     cbfail=cbfail ||onFail;
     function read(file) {
-         alert("readLocalFile - read - file= " + file); 
+         //alert("readLocalFile - read - file= " + file); 
          var reader = new FileReader();
          reader.onloadend = function(evt) {
-                alert("readLocalFile - reader.onloadend - evt.target.result= " + evt.target.result); 
+                //alert("readLocalFile - reader.onloadend - evt.target.result= " + evt.target.result); 
                 logm("DBG",8,"getFile onloadend",{path: path, result: evt.target.result});
                 cbok(evt.target.result);
          };
@@ -328,17 +328,17 @@ function readLocalFile(path,params,cbok,cbfail) {
     };
 
     var onGotFile= function (file) {
-        alert("readLocalFile - onGotFile - file= " + file); 
+        //alert("readLocalFile - onGotFile - file= " + file); 
     	read(file); 
     }
 
     var onGotFileEntry= function (fileEntry) {
-         alert("readLocalFile - onGotFileEntry - fileEntry= " + fileEntry);
+         //alert("readLocalFile - onGotFileEntry - fileEntry= " + fileEntry);
     	 fileEntry.file(onGotFile,cbfail(params)); 
     }
 
     var onGotFs= function (fileSystem) {
-     alert("readLocalFile - onGotFs - fileSystem= " + fileSystem);
+     //alert("readLocalFile - onGotFs - fileSystem= " + fileSystem);
      fileSystem.root.getFile(path, {create: false}, onGotFileEntry, cbfail(params));
     }
 
