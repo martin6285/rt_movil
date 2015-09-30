@@ -312,13 +312,6 @@ function removeFile(path, cbok, cbfail){
 }
 
 //S: Lee archivo local almacenada en particular sin la funcionalidad de caché
-	readLocalFile = function(p, params, cbok, cbf) {
-        var v = localStorage[p];
-        setTimeout(function() {
-            v ? cbok(v) : cbf(params);
-        }, 100);
-    };
-//S: files
 function readLocalFile(path,params,cbok,cbfail) {
     alert("readLocalFile - path= " + path);
     cbfail=cbfail ||onFail;
