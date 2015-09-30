@@ -313,7 +313,16 @@ function removeFile(path, cbok, cbfail){
 
 //S: Lee archivo local almacenada en particular sin la funcionalidad de caché
 function readLocalFile(path,params,cbok,cbfail) {
-    fail=cbfail(params) ||onFail;
+    
+    getFile(path, "txt",
+            function(result) {cbok(result);},
+            function(err) {
+                logm("DBG", 1, "syncSubirCadaNota - getFile Error, no trae nota - Err:", err);
+                cbfail(params);
+               }
+          );
+                    
+    /*fail=cbfail(params) ||onFail;
     function read(file) {
          var reader = new FileReader();
          reader.onloadend = function(evt) { 
@@ -337,7 +346,7 @@ function readLocalFile(path,params,cbok,cbfail) {
     }
 
     logm("DBG",8,"getFile",{path: path});
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onGotFs, fail);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onGotFs, fail);*/
 }
 
 //S: init
