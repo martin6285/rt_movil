@@ -321,32 +321,6 @@ function readLocalFile(path,params,cbok,cbfail) {
                 cbfail(params);
                }
           );
-                    
-    /*fail=cbfail(params) ||onFail;
-    function read(file) {
-         var reader = new FileReader();
-         reader.onloadend = function(evt) { 
-                logm("DBG",8,"getFile onloadend",{path: path, result: evt.target.result});
-                cbok(evt.target.result);
-         };
-         //Se asume que es un archivo txt
-         reader.readAsText(file); 
-    };
-
-    var onGotFile= function (file) {
-    	read(file); 
-    }
-
-    var onGotFileEntry= function (fileEntry) {
-    	 fileEntry.file(onGotFile,fail); 
-    }
-
-    var onGotFs= function (fileSystem) {
-     fileSystem.root.getFile(path, {create: false}, onGotFileEntry, fail);
-    }
-
-    logm("DBG",8,"getFile",{path: path});
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onGotFs, fail);*/
 }
 
 //S: init
