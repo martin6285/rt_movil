@@ -380,7 +380,7 @@ function rtInit() {
  con.append(form);
  var iusr=$('<input class="form-control input-lg "  placeholder="usuario" value="">');
  var ipass=$('<input class="form-control input-lg " type="password" placeholder="clave" value="">');
- var iversion=$('<input class="form-control  input-lg "  placeholder="version" value=\'{"User":"testParqueChas", "Pass":"asd123", "appUrl":"https://10.70.251.43:8444/app"}\'>');
+ var iversion=$('<input class="form-control  input-lg "  placeholder="version" value="">');
  var div = $('<div  style ="width:25%;margin: auto">');
  var bgo=$('<button class="btn btn-danger btn-lg btn-block ">Iniciar</buton>');
  var bgx=$('<button class="btn btn-danger btn-lg btn-block" >Salir</buton>');
