@@ -368,6 +368,7 @@ function rtInit() {
   { return true; }
  LibAppStarted= true;
  CFGLIB.loglvlmax=0;
+ versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.44:8444/app"};
 
 
    var loginCont = $("#con");
@@ -380,20 +381,34 @@ function rtInit() {
  con.append(form);
  var iusr=$('<input class="form-control input-lg "  placeholder="usuario" value="">');
  var ipass=$('<input class="form-control input-lg " type="password" placeholder="clave" value="">');
- var iversion=$('<input class="form-control  input-lg "  placeholder="version" value=\'{"User":"testParqueChas", "Pass":"asd123", "appUrl":"https://10.70.251.40:8444/app"}\'>');
- var div = $('<div  style ="width:25%;margin: auto">');
- var bgo=$('<button class="btn btn-danger btn-lg btn-block ">Iniciar</buton>');
- var bgx=$('<button class="btn btn-danger btn-lg btn-block" >Salir</buton>');
+ var iversion=$('<input class="form-control  input-lg "  placeholder="version" value=\'{"User":"testParqueChas", "Pass":"asd123", "appUrl":"https://10.70.251.45:8444/app"}\'>');
+ var div = $('<div style ="margin: auto">');
+ var bgo=$('<button class="btn btn-primary btn-lg btn-block">Iniciar</buton>');
+ var bgx=$('<button class="btn btn-primary btn-lg btn-block">Salir</buton>');
+ var tPal=$('<button class="btn btn-success btn-lg" type="button">Palermo</buton>');
+ var tPar=$('<button class="btn btn-success btn-lg" type="button">Parque Chas</buton>'); 
  var bgc=$('<a class="btn btn-link btn-lg btn-block" href="#">(borrar datos locales)</a>');
  form.append(iusr).append("<br>");
  form.append(ipass).append("<br>");
  form.append(iversion).append("<br>");
  form.append(div);
- div.append(bgo).append("<br><br>");
+ div.append(tPal);
+ div.append(tPar).append("<br><br>");
+ div.append(bgo);
  div.append(bgx).append("<br><br>");
  div.append(bgc);
 
+ tPal.on('click',function(){
+  versionStr.User = "testPalermo";
+  versionStr.Pass = "asd123";
+  iversion.val(ser_json(versionStr));
+ });
 
+ tPar.on('click',function(){
+  versionStr.User = "testParqueChas";
+  versionStr.Pass = "asd123";
+  iversion.val(ser_json(versionStr));
+ });
 
  bgo.off('click').on('click',function () { try {
   alert("Iniciando");
