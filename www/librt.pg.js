@@ -183,6 +183,8 @@ borrarTodo_dir= function (dirPath,quiereSinPedirConfirmacion,cb) {
  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFs, onFail);
 }
 
+
+
 //S: http
 function getHttp(url,reqdata,cbok,cbfail) {
  cbfail=cbfail || onFail;
@@ -207,26 +209,34 @@ function getHttp(url,reqdata,cbok,cbfail) {
  if (!offLine){
    offLine = true;
    if(!logIn){
-    var cfgPath  = CFGLIB.pathToLib.substring(0,CFGLIB.pathToLib.indexOf("/"))+"/cfg";
-    getFile(cfgPath, "txt",function (result){
-    var src=encriptar_fromSVR_r(result,SRC_KEY);
-     //creo que no anda por que tiene src_key
-      var jsonCfg = JSON.parse(src);
+     
+     cfgUsuariosAsociados = [];
+	
+		var cfgPath  = CFGLIB.pathToLib.substring(0,CFGLIB.pathToLib.indexOf("/"))+"/cfg";
+	 getFile(cfgPath, "txt",function (result){
+	    var src=encriptar_fromSVR_r(result,SRC_KEY);
+	    //creo que no anda por que tiene src_key
+	    var jsonCfg = JSON.parse(src);
+	    alert("recupera jsonCfg=[" + jsonCfg + "]");
+	    var vecUser = jsonCfg.usuarios;
+	    alert("recupera vecUser=[" + vecUser + "]");
+	
+		//U: Lee archivo en donde están guardados los usuarios asociados al dispositivo
+		cfgUsuariosAsociados = ser_json_r(src);
+     alert("recupera vecUser[0].user=[" + vecUser[0].user + "]");
      if(Cfg.User==jsonCfg.user){
-      if(Cfg.Pass==jsonCfg.pass){
+     	if(Cfg.Pass==jsonCfg.pass){
 
-     logIn=true;
-     alert (" No se pudo conectar a: " + url + " .Intentando Recuperar datos locales..." );
-     cbfail(reqdata);
+     		logIn=true;
+		    alert (" No se pudo conectar a: " + url + " .Intentando Recuperar datos locales..." );
+		    cbfail(reqdata);
 
-      }else
-       {
-      alert("La combinación de usuario y contraseña es incorrecta.");
-       }
+      	} else {
+      		alert("La combinación de usuario y contraseña es incorrecta.");
+        }
+     } else {
+       	alert("La combinación de usuario y contraseña es incorrecta.");
      }
-      else{
-       alert("La combinación de usuario y contraseña es incorrecta.");
-      }
 
      if(!logIn){
       //LibAppStarted=false;
@@ -234,9 +244,9 @@ function getHttp(url,reqdata,cbok,cbfail) {
      }
 
      },function (){
-   //puede ser que no tenga el cfg
-   alert("Error al querer Iniciar sesion. Para ingresar por primera vez debe estar conectado a la red. ");
-     })
+   		//puede ser que no tenga el cfg
+   		alert("Error al querer Iniciar sesion. Para ingresar por primera vez debe estar conectado a la red. ");
+     });
 
    }
  }else{
@@ -343,8 +353,7 @@ function runApp() {
  var s1= function () {
    evalFile(CFGLIB.pathDfltInLib+'app.js',false,nullf,function (err) {
 
-  if(offLine){
-    //por que no hay nada guardado no se encontraron los datos.
+  if(offLine){ //A: por que no hay nada guardado no se encontraron los datos.
     alert("No se encontraron datos locales. No se puede ingresar sin conexión a la red");
   }else{
     alert("Error iniciando paso 2, ingresó los datos correctos? ("+str(err)+")");
@@ -368,11 +377,7 @@ function rtInit() {
   { return true; }
  LibAppStarted= true;
  CFGLIB.loglvlmax=0;
- versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.44:8444/app"};
-
-
-   var loginCont = $("#con");
-  loginCont.html('');
+ versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.40:8444/app"};
 
   //D: pantalla inicial ofreciendo Run, Run con debug (alerts) y bajarse la app
  var con= $('#con');
@@ -381,22 +386,25 @@ function rtInit() {
  con.append(form);
  var iusr=$('<input class="form-control input-lg "  placeholder="usuario" value="">');
  var ipass=$('<input class="form-control input-lg " type="password" placeholder="clave" value="">');
- var iversion=$('<input class="form-control  input-lg "  placeholder="version" value=\'{"User":"testParqueChas", "Pass":"asd123", "appUrl":"https://10.70.251.45:8444/app"}\'>');
+ var iversion=$('<input class="form-control  input-lg "  placeholder="version">');
  var div = $('<div style ="margin: auto">');
  var bgo=$('<button class="btn btn-primary btn-lg btn-block">Iniciar</buton>');
  var bgx=$('<button class="btn btn-primary btn-lg btn-block">Salir</buton>');
- var tPal=$('<button class="btn btn-success btn-lg" type="button">Palermo</buton>');
- var tPar=$('<button class="btn btn-success btn-lg" type="button">Parque Chas</buton>'); 
  var bgc=$('<a class="btn btn-link btn-lg btn-block" href="#">(borrar datos locales)</a>');
  form.append(iusr).append("<br>");
  form.append(ipass).append("<br>");
  form.append(iversion).append("<br>");
  form.append(div);
- div.append(tPal);
- div.append(tPar).append("<br><br>");
  div.append(bgo);
  div.append(bgx).append("<br><br>");
  div.append(bgc);
+
+	//XXX:QUITAR SOLO PARA PRUEBAS DESDE ACA {
+ var tPal=$('<button class="btn btn-success btn-lg" type="button">Palermo</buton>');
+ var tPar=$('<button class="btn btn-success btn-lg" type="button">Parque Chas</buton>'); 
+ div.append("<br><br>");
+ div.append(tPal);
+ div.append(tPar)
 
  tPal.on('click',function(){
   versionStr.User = "testPalermo";
@@ -409,6 +417,8 @@ function rtInit() {
   versionStr.Pass = "asd123";
   iversion.val(ser_json(versionStr));
  });
+
+	//XXX:QUITAR SOLO PARA PRUEBAS HASTA ACA }
 
  bgo.off('click').on('click',function () { try {
   alert("Iniciando");
