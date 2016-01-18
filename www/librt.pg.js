@@ -224,8 +224,8 @@ function getHttp(url,reqdata,cbok,cbfail) {
 		//U: Lee archivo en donde están guardados los usuarios asociados al dispositivo
 		cfgUsuariosAsociados = ser_json_r(src);
      alert("recupera vecUser[0].user=[" + vecUser[0].user + "]");
-     if(Cfg.User==jsonCfg.user){
-     	if(Cfg.Pass==jsonCfg.pass){
+     if(Cfg.User==vecUser[0].user){
+     	if(Cfg.Pass==vecUser[0].pass){
 
      		logIn=true;
 		    alert (" No se pudo conectar a: " + url + " .Intentando Recuperar datos locales..." );
@@ -377,7 +377,7 @@ function rtInit() {
   { return true; }
  LibAppStarted= true;
  CFGLIB.loglvlmax=0;
- versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.40:8444/app"};
+ versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.45:8444/app"};
 
   //D: pantalla inicial ofreciendo Run, Run con debug (alerts) y bajarse la app
  var con= $('#con');
