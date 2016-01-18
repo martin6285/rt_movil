@@ -61,7 +61,6 @@ function nullf() {}
 //S: files
 function getFile(path,fmt,cbok,cbfail) {
  cbfail=cbfail ||onFail;
- alert("getFile path:" + path);
  function read(file) {
    var reader = new FileReader();
    reader.onloadend = function(evt) {
@@ -378,7 +377,7 @@ function rtInit() {
   { return true; }
  LibAppStarted= true;
  CFGLIB.loglvlmax=0;
- versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.40:8444/app"};
+ versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.45:8444/app"};
 
   //D: pantalla inicial ofreciendo Run, Run con debug (alerts) y bajarse la app
  var con= $('#con');
