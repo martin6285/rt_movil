@@ -216,7 +216,7 @@ function getHttp(url,reqdata,cbok,cbfail) {
 	 getFile(cfgPath, "txt",function (result){
 	    var src=encriptar_fromSVR_r(result,SRC_KEY);
 	    //creo que no anda por que tiene src_key
-	    var jsonCfg = JSON.parse(src);
+	    var jsonCfg = ser_json_r(src);//JSON.parse(src);
 	    alert("recupera jsonCfg=[" + jsonCfg + "]");
 	    var vecUser = jsonCfg.usuarios;
 	    alert("recupera vecUser=[" + vecUser + "]");
@@ -377,7 +377,7 @@ function rtInit() {
   { return true; }
  LibAppStarted= true;
  CFGLIB.loglvlmax=0;
- versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.45:8444/app"};
+ versionStr = {User:"testParqueChas",Pass:"asd123",appUrl:"https://10.70.251.40:8444/app"};
 
   //D: pantalla inicial ofreciendo Run, Run con debug (alerts) y bajarse la app
  var con= $('#con');
