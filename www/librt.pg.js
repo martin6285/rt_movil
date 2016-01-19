@@ -220,15 +220,15 @@ function getHttp(url,reqdata,cbok,cbfail) {
 	    alert("desencripta=[" + src + "]");
 	    alert("JSON.parse(src)=[" + JSON.parse(src) + "]");
 	    var jsonCfg = ser_json_r(src);//JSON.parse(src);
-	    alert("recupera jsonCfg=[" + jsonCfg + "]");
-	    var vecUser = jsonCfg.usuarios;
-	    alert("recupera vecUser=[" + vecUser + "]");
+	    alert("recupera jsonCfg[0]=[" + jsonCfg[0].user + "]");
+	    //var vecUser = jsonCfg.usuarios;
+	    //alert("recupera vecUser=[" + vecUser + "]");
 	
 		//U: Lee archivo en donde están guardados los usuarios asociados al dispositivo
 		cfgUsuariosAsociados = ser_json_r(src);
-     alert("recupera vecUser[0].user=[" + vecUser[0].user + "]");
-     if(Cfg.User==vecUser[0].user){
-     	if(Cfg.Pass==vecUser[0].pass){
+     alert("recupera cfgUsuariosAsociados[0].user=[" + cfgUsuariosAsociados[0].user + "]");
+     if(Cfg.User==cfgUsuariosAsociados[0].user){
+     	if(Cfg.Pass==cfgUsuariosAsociados[0].pass){
 
      		logIn=true;
 		    alert (" No se pudo conectar a: " + url + " .Intentando Recuperar datos locales..." );
