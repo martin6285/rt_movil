@@ -214,8 +214,11 @@ function getHttp(url,reqdata,cbok,cbfail) {
 	
 		var cfgPath  = CFGLIB.pathToLib.substring(0,CFGLIB.pathToLib.indexOf("/"))+"/cfg";
 	 getFile(cfgPath, "txt",function (result){
+	    alert("Antes de encriptar_r");
 	    var src=encriptar_r(result,SRC_KEY);//encriptar_fromSVR_r(result,SRC_KEY);
 	    //creo que no anda por que tiene src_key
+	    alert("desencripta=[" + src + "]");
+	    alert("JSON.parse(src)=[" + JSON.parse(src) + "]");
 	    var jsonCfg = ser_json_r(src);//JSON.parse(src);
 	    alert("recupera jsonCfg=[" + jsonCfg + "]");
 	    var vecUser = jsonCfg.usuarios;
